@@ -1,5 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -27,25 +25,48 @@ public class TurnamenManager {
     /** Total gol satu tim di seluruh pertandingannya. */
     public int totalGol(int timIndex) {
         // TODO Sub-Task 1: jumlahkan seluruh isi golPertandingan[timIndex].
-        return 0;
+        int total = 0; //Akumulator total gol
+        for (int i = 0; i < golPertandingan[timIndex].length; i++) {
+            total += golPertandingan[timIndex][i]; //Menambahkan gol dari setiap pertandingan ke total
+        }
+        return total;
     }
 
     /** Total gol seluruh tim di turnamen. Wajib memanggil totalGol(). */
     public int totalGolTurnamen() {
         // TODO Sub-Task 1: jumlahkan totalGol(i) untuk seluruh tim.
-        return 0;
+        int total = 0;
+        for (int i = 0; i < daftarTim.length; i++) {
+            for (int j = 0; j < golPertandingan[i].length; j++) {
+                total += golPertandingan[i][j]; //Menambahkan gol dari setiap tim ke total
+            }
+        }
+        return total;
     }
 
     /** Index pertandingan dengan gol terbanyak milik satu tim. -1 jika belum pernah main. */
     public int pertandinganTerbaik(int timIndex) {
         // TODO Sub-Task 1: cari index gol terbesar pada golPertandingan[timIndex].
-        return -1;
+        int maxIndex = -1; //Inisialisasi index pertandingan terbaik
+        int maxGol = -1; //Inisialisasi jumlah gol terbanyak
+        for (int i = 0; i < golPertandingan[timIndex].length; i++) {
+            if (golPertandingan[timIndex][i] > maxGol) {
+                maxGol = golPertandingan[timIndex][i]; //Update jumlah gol terbanyak
+                maxIndex = i; //Update index pertandingan terbaik
+            }
+        }
+        return maxIndex;
     }
 
     /** Rata-rata gol per pertandingan satu tim (dibulatkan ke bawah). 0 jika belum pernah main. */
     public int rataRataGol(int timIndex) {
         // TODO Sub-Task 1: totalGol(timIndex) dibagi jumlah pertandingan tim tsb.
-        return 0;
+        int totalGol = totalGol(timIndex); //Menghitung total gol tim
+        int jumlahPertandingan = golPertandingan[timIndex].length; //Menghitung jumlah pertandingan tim
+        if (jumlahPertandingan > 0) {
+            return totalGol / jumlahPertandingan; //Menghitung rata-rata gol per pertandingan
+        }
+        return 0; //Jika tim belum pernah main, rata-rata gol adalah 0
     }
 
     /** Index tim dengan total gol tertinggi se-turnamen. Seri -> index terkecil. */
