@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "TP5-BurhanCup/lib/hamcrest-core-1.3.jar",
+        "TP5-BurhanCup/lib/junit-4.13.2.jar"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
+}
