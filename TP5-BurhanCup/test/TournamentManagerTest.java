@@ -1,6 +1,11 @@
+package test;
 import static org.junit.Assert.*;
 import org.junit.Test;
-
+import Main;
+import Tim;
+import TimFakultas;
+import TimUndangan;
+import TurnamenManager;
 /**
  * Tulis unit test kalian di sini. Minimal satu happy path + satu edge case
  * per method wajib (lihat TP5.docx bagian Sub-Task 1, 2, dan 3).
@@ -11,7 +16,7 @@ import org.junit.Test;
 public class TournamentManagerTest {
 
     @Test
-    void totalGol_menjumlahkanSeluruhGolSatuTim() {
+    public void totalGol_menjumlahkanSeluruhGolSatuTim() {
         Tim[] tim = { new TimFakultas("Tim Contoh") };
         TournamentManager manager = new TournamentManager(tim);
 
@@ -19,7 +24,7 @@ public class TournamentManagerTest {
         // (misalnya lewat constructor lain, setter, atau muatDataGol()),
         // lalu assert hasil totalGol() sesuai ekspektasi.
 
-        // assertEquals(9, manager.totalGol(0));
+        assertEquals(9, manager.totalGol(0));
     }
 
     // TODO: totalGolTurnamen() -- happy path + pastikan memanggil totalGol()

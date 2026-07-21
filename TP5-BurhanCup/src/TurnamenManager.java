@@ -35,11 +35,9 @@ public class TurnamenManager {
     /** Total gol seluruh tim di turnamen. Wajib memanggil totalGol(). */
     public int totalGolTurnamen() {
         // TODO Sub-Task 1: jumlahkan totalGol(i) untuk seluruh tim.
-        int total = 0;
-        for (int i = 0; i < daftarTim.length; i++) {
-            for (int j = 0; j < golPertandingan[i].length; j++) {
-                total += golPertandingan[i][j]; //Menambahkan gol dari setiap tim ke total
-            }
+        int total = 0; //Akumulator total gol seluruh tim
+        for (int i = 0; i < golPertandingan.length; i++) {
+            total += totalGol(i);
         }
         return total;
     }
@@ -72,13 +70,26 @@ public class TurnamenManager {
     /** Index tim dengan total gol tertinggi se-turnamen. Seri -> index terkecil. */
     public int timGolTerbanyak() {
         // TODO Sub-Task 1: bandingkan totalGol(i) untuk seluruh tim.
-        return -1;
+        int maxIndex = -1; //Inisialisasi index tim dengan gol terbanyak
+        int maxGol = -1; //Inisialisasi jumlah gol terbanyak
+        for (int i = 0; i < daftarTim.length; i++) {
+            int totalGolTim = totalGol(i); //Menghitung total gol tim ke-i
+            if (totalGolTim > maxGol) {
+                maxGol = totalGolTim; //Update jumlah gol terbanyak
+                maxIndex = i; //Update index tim dengan gol terbanyak
+            }
+        }
+        return maxIndex;
     }
 
     /** Total biaya pendaftaran seluruh tim (wajib panggil getBiayaPendaftaran(), no instanceof). */
     public int totalBiayaPendaftaran() {
         // TODO Sub-Task 2: jumlahkan getBiayaPendaftaran() milik tiap objek Tim.
-        return 0;
+        int totalBiaya = 0; //Akumulator total biaya pendaftaran
+        for (Tim daftarTim1 : daftarTim) {
+            totalBiaya += daftarTim1.getBiayaPendaftaran(); //Menambahkan biaya pendaftaran tim ke total
+        }
+        return totalBiaya;
     }
 
     /**
@@ -89,5 +100,22 @@ public class TurnamenManager {
     public void muatDataGol(String namaFile) throws IOException {
         // TODO Sub-Task 3: baca file dengan try-with-resources (BufferedReader/Scanner),
         // parse tiap baris jadi int[], lalu timpa golPertandingan dengan hasilnya.
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(namaFile))) {
+            String line;
+            int index = 0;
+            while ((line = br.readLine()) != null && index < daftarTim.length) {
+                if (line.trim().isEmpty()) {
+                    golPertandingan[index] = new int[0]; // Tim belum pernah bertanding
+                } else {
+                    String[] parts = line.split(",");
+                    int[] golArray = new int[parts.length];
+                    for (int i = 0; i < parts.length; i++) {
+                        golArray[i] = Integer.parseInt(parts[i].trim()); // Parse gol dari string ke int
+                    }
+                    golPertandingan[index] = golArray; // Simpan gol pertandingan untuk tim ini
+                }
+                index++;
+            }
+        }
     }
 }
